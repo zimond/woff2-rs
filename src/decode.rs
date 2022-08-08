@@ -87,14 +87,14 @@ pub fn convert_woff2_to_ttf(input_buffer: &mut impl Buf) -> Result<Vec<u8>, Deco
     };
 
     // for checking the compressed size
-    let stream_start_remaining = input_buffer.remaining();
+    // let stream_start_remaining = input_buffer.remaining();
 
     let mut decompressed_tables =
         Vec::with_capacity(table_directory.uncompressed_length.try_into().unwrap());
 
     brotli::BrotliDecompress(&mut input_buffer.reader(), &mut decompressed_tables)?;
 
-    let compressed_size = stream_start_remaining - input_buffer.remaining();
+    // let compressed_size = stream_start_remaining - input_buffer.remaining();
 
     // if compressed_size != usize::try_from(header.total_compressed_size).unwrap() + 1 {
     //     Err(DecodeError::Invalid(
