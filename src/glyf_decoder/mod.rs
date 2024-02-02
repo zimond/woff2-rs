@@ -364,7 +364,8 @@ impl<'a> Woff2GlyfDecoder<'a, &'a [u8]> {
             if loca_use_u32 {
                 output_loca_table.put_u32(output_glyf_table.len().try_into().unwrap());
             } else {
-                output_loca_table.put_u16((output_glyf_table.len() / 2).try_into().unwrap());
+                let slice = (output_glyf_table.len() / 2).to_be_bytes();
+                output_loca_table.put_slice(&slice[(slice.len() - 2)..]);
             }
             self.parse_next_glyph(glyph_index, &mut output_glyf_table)?;
             pad_to_multiple_of_four(&mut output_glyf_table);
@@ -375,7 +376,8 @@ impl<'a> Woff2GlyfDecoder<'a, &'a [u8]> {
             if output_glyf_table.len() % 2 == 1 {
                 output_glyf_table.put_u8(0);
             }
-            output_loca_table.put_u16((output_glyf_table.len() / 2).try_into().unwrap());
+            let slice = (output_glyf_table.len() / 2).to_be_bytes();
+            output_loca_table.put_slice(&slice[(slice.len() - 2)..]);
         }
         Ok((output_glyf_table, output_loca_table))
     }
