@@ -1,6 +1,7 @@
-# `woff2`
+# `woff2-patched`
 
-`woff2` is a crate for converting WOFF2 font files to OpenType fonts.
+`woff2` is a crate for converting WOFF2 font files to OpenType fonts. This is a patched version
+with some fixes.
 
 ## Examples
 
